@@ -1,0 +1,37 @@
+{
+  "countries": 69,
+  "photos": 15502,
+  "cv_r2": -0.114,
+  "cv_rho": -0.059,
+  "placebo_r2_95th": -0.008,
+  "placebo_p": 0.946,
+  "countries_200plus": 43,
+  "money_plus_photos": {
+    "n": 67,
+    "r2_gdp_only": 0.566,
+    "r2_gdp_plus_people": 0.612,
+    "gain": 0.046,
+    "placebo_gain_95th": 0.016,
+    "placebo_p": 0.006
+  },
+  "weights": {
+    "brightness": -0.036,
+    "night": -0.033,
+    "sunset": -0.03,
+    "warmth": -0.028,
+    "smile_given_face": -0.017,
+    "nature": -0.017,
+    "fun": -0.01,
+    "city": -0.009,
+    "indoors": 0.004,
+    "colourfulness": 0.005,
+    "smile": 0.006,
+    "people": 0.007,
+    "pets": 0.014,
+    "saturation": 0.016,
+    "joy_title": 0.017,
+    "face": 0.027,
+    "together": 0.03,
+    "food": 0.049
+  }
+}
