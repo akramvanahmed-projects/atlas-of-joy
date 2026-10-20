@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Atlas of Joy</title>
+<meta name="description" content="Can ordinary photos tell how happy a country is? 15,502 local Flickr photos from 69 countries, checked against the World Happiness Report.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="grid">
+
+  <header class="head">
+    <p class="kicker">Atlas of Joy</p>
+    <h1>Do our photos know<br>how happy we are?</h1>
+    <p class="lede" id="lede"></p>
+  </header>
+
+  <section class="stats" id="stats"></section>
+
+  <section class="block">
+    <div class="block-head">
+      <h2>Map</h2>
+      <div class="controls">
+        <label for="layer">Show</label>
+        <select id="layer"></select>
+      </div>
+    </div>
+    <div id="map" class="map" role="img" aria-label="World map"></div>
+    <div id="legend" class="legend"></div>
+  </section>
+
+  <section class="block split">
+    <div>
+      <h2>Country</h2>
+      <div id="country" class="country"><p class="muted">Pick a country on the map or in the list.</p></div>
+    </div>
+    <div>
+      <h2>Photos</h2>
+      <div id="strip" class="strip"></div>
+      <p class="muted small" id="strip-note"></p>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="block-head">
+      <h2>People together vs happiness beyond money</h2>
+      <p class="muted small">Each dot is a country. Up means happier than its GDP per head would predict. Right means more of its local photos show people together: friends, family, parties, weddings, crowds.</p>
+    </div>
+    <div id="scatter" class="dots"></div>
+  </section>
+
+  <section class="block">
+    <div class="block-head">
+      <h2>Which signals matter</h2>
+      <p class="muted small">Black bar: rank correlation with happiness once wealth is taken out. Grey dot: plain correlation. 67 countries with GDP data.</p>
+    </div>
+    <div id="signals" class="signals"></div>
+  </section>
+
+  <section class="block">
+    <h2>How to read this</h2>
+    <div class="notes">
+      <p>The photos were taken between 2004 and 2014 by people photographing their own country. The happiness scores come from the same years.</p>
+      <p>This is a correlation across 69 countries, not cause and effect. Photographing friends doesn't make a country happier. More likely, places where social life is visible and valued score higher on both.</p>
+      <p>Flickr users aren't a random slice of any country. They are probably younger, better off and more urban than average, and the gap is likely bigger in poorer countries.</p>
+      <p>We tested 18 signals. Some of them will look good by luck. The people signals survive a placebo test, but treat them as a lead, not a law.</p>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>Data table</h2>
+    <details>
+      <summary>All countries</summary>
+      <div class="table-wrap"><table id="table"></table></div>
+    </details>
+  </section>
+
+  <footer class="foot">
+    <p>Photos: Flickr users via YFCC100M and Open Images, CC BY 2.0. Happiness: World Happiness Report 2015 (survey years 2012 to 2014), via Our World in Data. Map: Natural Earth via world-atlas.</p>
+    <p><a href="https://github.com/akramvanahmed-projects/atlas-of-joy">Code and method on GitHub</a></p>
+  </footer>
+
+</main>
+<div id="tip" class="tip" hidden></div>
+<script src="vendor/d3.min.js"></script>
+<script src="vendor/topojson-client.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
