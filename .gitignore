@@ -1,0 +1,9 @@
+# big or rebuildable
+data/raw/placemeta.sqlite
+data/raw/boxable_train_ids.txt
+data/raw/*.bz2
+data/interim/
+data/thumbs/
+
+__pycache__/
+.DS_Store
