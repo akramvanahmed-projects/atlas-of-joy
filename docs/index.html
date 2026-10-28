@@ -20,6 +20,29 @@
 
   <section class="block">
     <div class="block-head">
+      <h2>Two countries</h2>
+      <p class="muted small">One everybody expects near the top, and one that surprises people. Ranks are out of 67 countries, 1 is happiest.</p>
+    </div>
+    <div class="pair">
+      <article class="focus" data-country="Norway">
+        <p class="tag">The one you'd expect</p>
+        <h3>Norway</h3>
+        <p class="story">Rich, safe and always near the top of the happiness tables. The photos are mostly landscapes: half of them show nature, and fewer than one in ten show people together. The model ranks Norway about where the surveys do, but that's mostly the money talking.</p>
+        <div class="facts"></div>
+        <div class="mini-strip"></div>
+      </article>
+      <article class="focus" data-country="Mexico">
+        <p class="tag">The one you wouldn't</p>
+        <h3>Mexico</h3>
+        <p class="story">A quarter of Norway's GDP per head, yet it sits in the top 15 of every survey here. Mexicans photograph each other a lot: 15% of their photos show people together, against a typical 9%. That's the pattern the atlas found. Even so, the model still puts Mexico far too low.</p>
+        <div class="facts"></div>
+        <div class="mini-strip"></div>
+      </article>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="block-head">
       <h2>Map</h2>
       <div class="controls">
         <label for="layer">Show</label>
@@ -59,6 +82,21 @@
   </section>
 
   <section class="block">
+    <div class="block-head">
+      <h2>Against other reports</h2>
+      <p class="muted small">The model learned from the World Happiness Report for 2012 to 2014. How well does it line up with the same report ten years later, and with a different survey that just asks people if they're happy?</p>
+    </div>
+    <div class="table-wrap"><table id="reports"></table></div>
+    <p class="muted small" id="reports-note"></p>
+    <div class="key" style="margin-top:32px">
+      <span><i style="width:8px;height:8px;border-radius:50%;background:var(--red)"></i>model</span>
+      <span><i style="width:8px;height:8px;border-radius:50%;background:var(--ink)"></i>WHR 2024</span>
+      <span><i style="width:8px;height:8px;border-radius:50%;border:1.5px solid var(--ink-2)"></i>World Values Survey</span>
+    </div>
+    <div id="ranks" class="dots"></div>
+  </section>
+
+  <section class="block">
     <h2>How to read this</h2>
     <div class="notes">
       <p>The photos were taken between 2004 and 2014 by people photographing their own country. The happiness scores come from the same years.</p>
@@ -77,7 +115,7 @@
   </section>
 
   <footer class="foot">
-    <p>Photos: Flickr users via YFCC100M and Open Images, CC BY 2.0. Happiness: World Happiness Report 2015 (survey years 2012 to 2014), via Our World in Data. Map: Natural Earth via world-atlas.</p>
+    <p>Photos: Flickr users via YFCC100M and Open Images, CC BY 2.0. Happiness: World Happiness Report (2012 to 2014 and 2024) and World Values Survey, via Our World in Data. GDP: World Bank via Our World in Data. Map: Natural Earth via world-atlas.</p>
     <p><a href="https://github.com/akramvanahmed-projects/atlas-of-joy">Code and method on GitHub</a></p>
   </footer>
 

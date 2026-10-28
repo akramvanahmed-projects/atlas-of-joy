@@ -73,7 +73,10 @@ Promise.all([d3.json("data.json"), d3.json("vendor/countries-110m.json")]).then(
   signals(data);
   table(data);
 
-  const start = byName.get("Germany") ? "Germany" : data.countries[0].name;
+  focus(byName);
+  reports(data);
+
+  const start = byName.get("Norway") ? "Norway" : data.countries[0].name;
   select(start);
 });
 
@@ -253,6 +256,65 @@ function signals(data) {
   g.append("rect").attr("x", 0).attr("width", width).attr("y", (d, i) => y(i) - rowH / 2).attr("height", rowH).attr("fill", "transparent")
     .on("mousemove", (e, d) => showTip(e, `<b>${LABELS[d.signal] || d.signal}</b><br>beyond wealth ${signed(d.partial_rho)} (p ${num(d.partial_p, 3)})<br>plain ${signed(d.rho)}`))
     .on("mouseleave", hideTip);
+}
+
+function focus(byName) {
+  document.querySelectorAll(".focus").forEach((el) => {
+    const c = byName.get(el.dataset.country);
+    if (!c) return;
+    const facts = [
+      [`#${c.whr_2024_rank}`, "in the 2024 report"],
+      [`#${c.predicted_rank}`, "where the model puts it"],
+      [pct(c.together), "of photos show people together"],
+    ];
+    el.querySelector(".facts").innerHTML = facts.map(([v, l]) => `<div><b>${v}</b><span>${l}</span></div>`).join("");
+    el.querySelector(".mini-strip").innerHTML = c.thumbs.slice(0, 8)
+      .map((t) => `<a href="${t.page}" target="_blank" rel="noopener" title="${(t.title || "Untitled").replace(/"/g, "&quot;")} by ${t.author}"><img src="thumbs/${t.id}.jpg" alt="" loading="lazy"></a>`).join("");
+    el.style.cursor = "pointer";
+    el.addEventListener("click", (e) => {
+      if (e.target.closest("a")) return;
+      select(c.name);
+      document.getElementById("country").scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  });
+}
+
+function reports(data) {
+  const t = d3.select("#reports");
+  t.append("thead").append("tr").selectAll("th")
+    .data(["Report", "Countries", "Model (GDP + people photos)", "GDP only"]).join("th").text((d) => d);
+  t.append("tbody").selectAll("tr").data(data.compare).join("tr").html((r) =>
+    `<td>${r.report}</td><td>${r.countries}</td>` +
+    `<td class="${r.photos_model > r.gdp_only ? "best" : ""}">${num(r.photos_model)}</td>` +
+    `<td class="${r.gdp_only >= r.photos_model ? "best" : ""}">${num(r.gdp_only)}</td>`);
+  document.getElementById("reports-note").textContent =
+    "Rank correlation between each prediction and each report. Bold marks the better of the two. " +
+    "The photos help on the data they learned from, but the edge doesn't carry over to the newer report or the other survey.";
+
+  const rows = data.countries.filter((c) => c.whr_2024_rank != null && c.predicted_rank != null)
+    .sort((a, b) => a.whr_2024_rank - b.whr_2024_rank);
+  const rowH = 16, margin = { top: 24, right: 16, bottom: 8, left: 150 };
+  const width = 960, height = margin.top + rows.length * rowH + margin.bottom;
+  const x = d3.scaleLinear([1, d3.max(rows, (d) => Math.max(d.predicted_rank, d.whr_2024_rank))], [margin.left, width - margin.right]);
+  const y = (i) => margin.top + i * rowH + rowH / 2;
+
+  const svg = d3.select("#ranks").append("svg").attr("viewBox", `0 0 ${width} ${height}`);
+  svg.append("g").attr("class", "axis").attr("transform", `translate(0,${margin.top - 8})`)
+    .call(d3.axisTop(x).tickValues([1, 10, 20, 30, 40, 50, 60]).tickFormat((d) => `#${d}`).tickSize(-(rows.length * rowH + 8)))
+    .call((g) => g.select(".domain").remove());
+
+  const g = svg.selectAll("g.row").data(rows).join("g").attr("class", "row").style("cursor", "pointer");
+  g.append("rect").attr("x", 0).attr("width", width).attr("y", (d, i) => y(i) - rowH / 2).attr("height", rowH).attr("fill", "transparent");
+  g.append("text").attr("class", "row-label").attr("x", margin.left - 12).attr("y", (d, i) => y(i)).attr("dy", "0.35em").attr("text-anchor", "end").text((d) => d.name);
+  g.append("line").attr("class", "link").attr("x1", (d) => x(d.whr_2024_rank)).attr("x2", (d) => x(d.predicted_rank)).attr("y1", (d, i) => y(i)).attr("y2", (d, i) => y(i));
+  g.filter((d) => d.wvs_happy_rank != null).append("circle").attr("class", "dot-wvs").attr("r", 3.5).attr("cx", (d) => x(d.wvs_happy_rank)).attr("cy", (d, i) => y(i) - 0);
+  g.append("circle").attr("class", "dot-whr").attr("r", 4).attr("cx", (d) => x(d.whr_2024_rank)).attr("cy", (d, i) => y(i));
+  g.append("circle").attr("class", "dot-pred").attr("r", 4).attr("cx", (d) => x(d.predicted_rank)).attr("cy", (d, i) => y(i));
+  g.on("mousemove", (e, d) => showTip(e, `<b>${d.name}</b><br>Model #${d.predicted_rank}<br>WHR 2024 #${d.whr_2024_rank}<br>World Values Survey ${d.wvs_happy_rank ? "#" + d.wvs_happy_rank : "–"}`))
+    .on("mouseleave", hideTip)
+    .on("click", (e, d) => select(d.name));
+
+  listeners.push((name) => g.select("text").classed("on", (d) => d.name === name));
 }
 
 function table(data) {

@@ -19,6 +19,7 @@ FIELDS = [
     "photos", "users", "happiness", "predicted", "gdp", "beyond_wealth", "smile_given_face", "smile", "face",
     "people", "together", "fun", "nature", "sunset", "city", "indoors", "pets", "food",
     "night", "joy_title", "brightness", "saturation", "warmth", "colourfulness",
+    "gdp_only", "whr_2024", "wvs_happy", "predicted_rank", "whr_2024_rank", "wvs_happy_rank",
 ]
 
 
@@ -39,6 +40,10 @@ def main():
     ok = preds.log_gdp.notna()
     fit = np.polyfit(preds.log_gdp[ok], preds.happiness[ok], 1)
     countries["beyond_wealth"] = preds.happiness - np.polyval(fit, preds.log_gdp)
+    compare = pd.read_csv(DATA / "compare_countries.csv", index_col="country")
+    for col in ["gdp_only", "whr_2024", "wvs_happy", "predicted_rank", "whr_2024_rank", "wvs_happy_rank"]:
+        countries[col] = compare[col]
+
     photos = pd.read_csv(DATA / "photos.csv")
     sample = pd.read_csv(ROOT / "data/interim/sample.csv", usecols=["image_id", "photo_id"])
     photos = photos.merge(sample, on="image_id")
@@ -75,7 +80,8 @@ def main():
     wealth = pd.read_csv(DATA / "wealth_check.csv").query("countries == 'all'")
     signals = signals.merge(wealth[["signal", "partial_rho", "p"]].rename(columns={"p": "partial_p"}), on="signal")
     signals = signals.sort_values("partial_rho", ascending=False).round(3).to_dict(orient="records")
-    data = {"summary": summary, "signals": signals, "countries": rows}
+    compare_summary = json.loads((DATA / "compare.json").read_text())
+    data = {"summary": summary, "signals": signals, "compare": compare_summary["reports"], "countries": rows}
     (SITE / "data.json").write_text(json.dumps(data, ensure_ascii=False, separators=(",", ":")))
     print(f"{len(rows)} countries, {sum(len(r['thumbs']) for r in rows)} thumbnails")
 
