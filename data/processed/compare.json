@@ -1,0 +1,52 @@
+{
+  "reports": [
+    {
+      "report": "WHR 2012-14",
+      "countries": 67,
+      "photos_model": 0.802,
+      "gdp_only": 0.773,
+      "gain": 0.029
+    },
+    {
+      "report": "WHR 2024",
+      "countries": 67,
+      "photos_model": 0.735,
+      "gdp_only": 0.772,
+      "gain": -0.038
+    },
+    {
+      "report": "World Values Survey",
+      "countries": 64,
+      "photos_model": 0.329,
+      "gdp_only": 0.342,
+      "gain": -0.013
+    }
+  ],
+  "focus": {
+    "Norway": {
+      "predicted": 6.979,
+      "gdp_only": 7.177,
+      "happiness": 7.522,
+      "whr_2024": 7.262,
+      "wvs_happy": 94.063,
+      "predicted_rank": 6.0,
+      "gdp_only_rank": 2.0,
+      "happiness_rank": 4.0,
+      "whr_2024_rank": 6.0,
+      "wvs_happy_rank": 5.0
+    },
+    "Mexico": {
+      "predicted": 5.955,
+      "gdp_only": 5.667,
+      "happiness": 7.187,
+      "whr_2024": 6.979,
+      "wvs_happy": 92.021,
+      "predicted_rank": 37.0,
+      "gdp_only_rank": 46.0,
+      "happiness_rank": 13.0,
+      "whr_2024_rank": 8.0,
+      "wvs_happy_rank": 10.0
+    }
+  },
+  "n": 67
+}
