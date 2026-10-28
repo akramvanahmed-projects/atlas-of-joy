@@ -20,6 +20,37 @@ What's interesting is what *doesn't* matter. Whether the people in the photos ar
 
 Mexico, Brazil and Colombia sit at the top: much happier than their GDP suggests. Bulgaria, Hungary and Greece sit at the bottom. The UAE and the Maldives are the outliers on the right. Both have very few local photographers (5 and 6), so I wouldn't read much into them.
 
+## Norway and Mexico
+
+![Norway and Mexico](figures/norway-mexico.png)
+
+**Norway** is the country you'd expect to see here. It's rich and always near the top: #4 of 67 in the 2012-14 report, #6 in 2024 and #5 in the World Values Survey. Its photos are mostly landscapes. Half show nature, and fewer than one in ten show people together. The model puts Norway at #6, right where the surveys do, but GDP alone would have put it at #2. Norway is happy, and the photos don't really explain why. The money does most of that work.
+
+**Mexico** is the surprise. It has a quarter of Norway's GDP per head, yet it ranks #13, #8 and #10 in the three surveys. 15% of its local photos show people together, against a typical 9%. Of all 69 countries it's the most "happier than its wealth predicts". The photos pull the model in the right direction: GDP alone ranks Mexico #46, and GDP plus people photos ranks it #37. That's still nowhere near the real #8. Whatever makes Mexico happy, a camera only catches part of it.
+
+## Against other reports
+
+The model learned from one report, the World Happiness Report for 2012-14. So I checked its predictions against two things it never saw:
+
+- the same report ten years later (2024)
+- the World Values Survey, which simply asks "would you say you are happy?", mostly in its 2017-2022 wave
+
+![Comparison with other reports](figures/reports.png)
+
+Rank correlation between each prediction and each report:
+
+| Report | Countries | GDP + people photos | GDP only |
+|---|---:|---:|---:|
+| WHR 2012-14 | 67 | **0.80** | 0.77 |
+| WHR 2024 | 67 | 0.73 | **0.77** |
+| World Values Survey | 64 | 0.33 | **0.34** |
+
+The honest reading: the photos help on the data they learned from, but the edge doesn't carry over. On the newer report and on the other survey, GDP alone does as well or slightly better. Two likely reasons. Ten years is a long time: Serbia, Lithuania and Romania each moved more than 20 places. And "are you happy?" is a different question from "rate your life 0 to 10". In this data, GDP tracks the life ratings far more closely (0.77) than it tracks plain happiness (0.34). That's also why both predictions match the World Values Survey so poorly.
+
+![Model vs WHR 2024 vs World Values Survey, ranks](figures/ranks.png)
+
+Full numbers per country: [`data/processed/compare_countries.csv`](data/processed/compare_countries.csv).
+
 ## Signals
 
 Rank correlation with happiness after taking out log GDP per head, 67 countries:
@@ -63,6 +94,7 @@ Open Images                        ->  same Flickr photos, image files and label
    - Ridge regression on all signals, leave one country out, against 1,000 shuffled runs.
    - Partial correlation after log GDP.
    - GDP-only vs GDP + people signals, leave one country out, against 1,000 runs with the photo signals shuffled between countries.
+7. **Other reports.** Both predictions are checked against the WHR 2024 and the World Values Survey "happy" share, by rank correlation.
 
 ## Caveats
 
@@ -86,6 +118,7 @@ python src/fetch_labels.py human
 python src/colour.py
 python src/features.py
 python src/model.py          # the placebo runs take a few minutes
+python src/compare.py
 python src/export_site.py
 ```
 
@@ -93,7 +126,7 @@ You need two raw files first:
 - `data/raw/placemeta.sqlite`: [MediaEval 2016 placing metadata](https://multimedia-commons.s3.amazonaws.com/subsets/YLI-GEO/mp16/metadata/placemeta_train_photo.sql)
 - `data/raw/boxable_train_ids.txt`: the first column of [Open Images boxable train ids](https://storage.googleapis.com/openimages/2018_04/train/train-images-boxable-with-rotation.csv)
 
-The happiness and GDP files are already in `data/raw`. The site in `docs/` is plain HTML and d3, with no build step:
+The happiness, survey and GDP files are already in `data/raw`. The site in `docs/` is plain HTML and d3, with no build step:
 
 ```
 cd docs && python -m http.server
@@ -102,7 +135,7 @@ cd docs && python -m http.server
 ## Data and credits
 
 - Photos: Flickr users, via [YFCC100M](https://multimediacommons.wordpress.com/yfcc100m-core-dataset/) and [Open Images](https://storage.googleapis.com/openimages/web/index.html), CC BY 2.0. Each thumbnail on the site links back to the original.
-- Happiness: [World Happiness Report](https://worldhappiness.report/) via [Our World in Data](https://ourworldindata.org/happiness-and-life-satisfaction).
+- Happiness: [World Happiness Report](https://worldhappiness.report/) (survey years 2012-14 and 2024) and [World Values Survey](https://www.worldvaluessurvey.org/), both via [Our World in Data](https://ourworldindata.org/happiness-and-life-satisfaction).
 - GDP per head (PPP): World Bank via Our World in Data.
 - Map shapes: [Natural Earth](https://www.naturalearthdata.com/) via [world-atlas](https://github.com/topojson/world-atlas).
 
