@@ -20,6 +20,27 @@
 
   <section class="block">
     <div class="block-head">
+      <h2>Four ways to guess</h2>
+      <p class="muted small">Four models try to rank 67 countries by happiness. Each country is guessed without ever seeing its own score. The numbers show how well each guess matches each report, as a rank correlation. 1 would be perfect, 0 is a coin toss.</p>
+    </div>
+    <div id="showdown" class="showdown"></div>
+    <p class="verdict" id="verdict"></p>
+    <div class="pair moves">
+      <div>
+        <h3 class="moves-head">Photos got these right</h3>
+        <p class="muted small">Money alone missed them. Adding people photos pulled them towards their real rank.</p>
+        <ol id="rescued" class="move-list"></ol>
+      </div>
+      <div>
+        <h3 class="moves-head">Photos got these wrong</h3>
+        <p class="muted small">Money alone was closer. The photos pushed them further away.</p>
+        <ol id="misled" class="move-list"></ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="block-head">
       <h2>Two countries</h2>
       <p class="muted small">One everybody expects near the top, and one that surprises people. Ranks are out of 67 countries, 1 is happiest.</p>
     </div>

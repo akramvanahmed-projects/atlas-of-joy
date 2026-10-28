@@ -1,0 +1,122 @@
+{
+  "scores": [
+    {
+      "model": "Photos only",
+      "key": "photos_only",
+      "happiness": -0.036,
+      "whr_2024": -0.16,
+      "wvs_happy": 0.069
+    },
+    {
+      "model": "People only",
+      "key": "people_only",
+      "happiness": 0.141,
+      "whr_2024": -0.019,
+      "wvs_happy": 0.088
+    },
+    {
+      "model": "Money only",
+      "key": "money_only",
+      "happiness": 0.773,
+      "whr_2024": 0.772,
+      "wvs_happy": 0.342
+    },
+    {
+      "model": "Money + people",
+      "key": "money_people",
+      "happiness": 0.802,
+      "whr_2024": 0.735,
+      "wvs_happy": 0.329
+    }
+  ],
+  "helped": 32,
+  "hurt": 32,
+  "rescued": [
+    {
+      "country": "Ecuador",
+      "real": 34.0,
+      "money_only": 57.0,
+      "money_people": 39.0,
+      "closer_by": 18.0
+    },
+    {
+      "country": "Greece",
+      "real": 56.0,
+      "money_only": 33.0,
+      "money_people": 46.0,
+      "closer_by": 13.0
+    },
+    {
+      "country": "Brazil",
+      "real": 15.0,
+      "money_only": 48.0,
+      "money_people": 36.0,
+      "closer_by": 12.0
+    },
+    {
+      "country": "Hungary",
+      "real": 57.0,
+      "money_only": 34.0,
+      "money_people": 45.0,
+      "closer_by": 11.0
+    },
+    {
+      "country": "Portugal",
+      "real": 52.0,
+      "money_only": 30.0,
+      "money_people": 40.5,
+      "closer_by": 10.5
+    },
+    {
+      "country": "Chile",
+      "real": 22.0,
+      "money_only": 41.0,
+      "money_people": 31.0,
+      "closer_by": 10.0
+    }
+  ],
+  "misled": [
+    {
+      "country": "Croatia",
+      "real": 42.0,
+      "money_only": 38.0,
+      "money_people": 16.0,
+      "closer_by": -22.0
+    },
+    {
+      "country": "Iceland",
+      "real": 2.0,
+      "money_only": 12.0,
+      "money_people": 24.0,
+      "closer_by": -12.0
+    },
+    {
+      "country": "Uruguay",
+      "real": 26.0,
+      "money_only": 37.0,
+      "money_people": 48.0,
+      "closer_by": -11.0
+    },
+    {
+      "country": "Latvia",
+      "real": 53.0,
+      "money_only": 36.0,
+      "money_people": 25.0,
+      "closer_by": -11.0
+    },
+    {
+      "country": "New Zealand",
+      "real": 9.0,
+      "money_only": 23.0,
+      "money_people": 32.0,
+      "closer_by": -9.0
+    },
+    {
+      "country": "Slovakia",
+      "real": 31.0,
+      "money_only": 32.0,
+      "money_people": 21.0,
+      "closer_by": -9.0
+    }
+  ]
+}

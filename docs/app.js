@@ -73,6 +73,7 @@ Promise.all([d3.json("data.json"), d3.json("vendor/countries-110m.json")]).then(
   signals(data);
   table(data);
 
+  showdown(data);
   focus(byName);
   reports(data);
 
@@ -256,6 +257,44 @@ function signals(data) {
   g.append("rect").attr("x", 0).attr("width", width).attr("y", (d, i) => y(i) - rowH / 2).attr("height", rowH).attr("fill", "transparent")
     .on("mousemove", (e, d) => showTip(e, `<b>${LABELS[d.signal] || d.signal}</b><br>beyond wealth ${signed(d.partial_rho)} (p ${num(d.partial_p, 3)})<br>plain ${signed(d.rho)}`))
     .on("mouseleave", hideTip);
+}
+
+function showdown(data) {
+  const sd = data.showdown;
+  const blurb = {
+    photos_only: "all 18 photo signals",
+    people_only: "faces, people, people together",
+    money_only: "GDP per head",
+    money_people: "GDP + the three people signals",
+  };
+  const reportsCols = [["happiness", "WHR 2012-14", "what it learned from"], ["whr_2024", "WHR 2024", "ten years later"], ["wvs_happy", "World Values Survey", "\"are you happy?\""]];
+  const best = Object.fromEntries(reportsCols.map(([k]) => [k, d3.max(sd.scores, (r) => r[k])]));
+
+  let html = `<div></div>` + reportsCols.map(([, l, sub]) => `<div class="h"><b>${l}</b><br>${sub}</div>`).join("");
+  for (const r of sd.scores) {
+    html += `<div class="m">${r.model}<small>${blurb[r.key]}</small></div>`;
+    for (const [k] of reportsCols) {
+      const v = r[k];
+      const cls = v === best[k] ? "top" : v < 0.2 ? "low" : "";
+      const left = v < 0 ? 50 + v * 50 : 50, width = Math.abs(v) * 50;
+      html += `<div><div class="v ${cls}">${signed(v)}</div><div class="bar-track ${cls}"><div class="bar-fill" style="left:${left}%;width:${width}%"></div></div></div>`;
+    }
+  }
+  document.getElementById("showdown").innerHTML = html;
+
+  document.getElementById("verdict").textContent =
+    `Photos on their own know nothing. Money on its own knows a lot. Put them together and the photos move ` +
+    `${sd.helped} countries closer to their real rank and ${sd.hurt} further away. Country by country, that's a coin flip. ` +
+    `The gain comes from a few big wins: Latin American countries that are happier than their money, and southern and eastern European ones that are less happy than theirs.`;
+
+  const item = (d) => {
+    const delta = Math.round(d.closer_by);
+    return `<li><div><div class="name">${d.country}</div>` +
+      `<div class="path">real #${Math.round(d.real)} · money alone #${Math.round(d.money_only)} · money + people #${Math.round(d.money_people)}</div></div>` +
+      `<div class="delta ${delta > 0 ? "up" : ""}">${delta > 0 ? "+" : "−"}${Math.abs(delta)}</div></li>`;
+  };
+  document.getElementById("rescued").innerHTML = sd.rescued.map(item).join("");
+  document.getElementById("misled").innerHTML = sd.misled.map(item).join("");
 }
 
 function focus(byName) {

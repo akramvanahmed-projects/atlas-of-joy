@@ -81,7 +81,11 @@ def main():
     signals = signals.merge(wealth[["signal", "partial_rho", "p"]].rename(columns={"p": "partial_p"}), on="signal")
     signals = signals.sort_values("partial_rho", ascending=False).round(3).to_dict(orient="records")
     compare_summary = json.loads((DATA / "compare.json").read_text())
-    data = {"summary": summary, "signals": signals, "compare": compare_summary["reports"], "countries": rows}
+    showdown = json.loads((DATA / "showdown.json").read_text())
+    data = {
+        "summary": summary, "signals": signals, "compare": compare_summary["reports"],
+        "showdown": showdown, "countries": rows,
+    }
     (SITE / "data.json").write_text(json.dumps(data, ensure_ascii=False, separators=(",", ":")))
     print(f"{len(rows)} countries, {sum(len(r['thumbs']) for r in rows)} thumbnails")
 

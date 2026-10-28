@@ -20,6 +20,29 @@ What's interesting is what *doesn't* matter. Whether the people in the photos ar
 
 Mexico, Brazil and Colombia sit at the top: much happier than their GDP suggests. Bulgaria, Hungary and Greece sit at the bottom. The UAE and the Maldives are the outliers on the right. Both have very few local photographers (5 and 6), so I wouldn't read much into them.
 
+## With money and without
+
+Four models try to rank 67 countries by happiness. Each one guesses every country without seeing that country's score (leave one out). The table shows rank correlation with each report: 1 would be perfect, 0 is a coin toss.
+
+![Four models](figures/showdown.png)
+
+| Model | WHR 2012-14 | WHR 2024 | World Values Survey |
+|---|---:|---:|---:|
+| Photos only (all 18 signals) | −0.04 | −0.16 | +0.07 |
+| People only (faces, people, together) | +0.14 | −0.02 | +0.09 |
+| Money only (GDP per head) | +0.77 | **+0.77** | **+0.34** |
+| Money + people | **+0.80** | +0.73 | +0.33 |
+
+Without money, the photos know next to nothing. With money, they nudge the ranking. Country by country, though, it's a coin flip: the photos move 32 countries closer to their real rank and 32 further away. The overall gain comes from a handful of big wins.
+
+![Where the photos helped and where they hurt](figures/moves.png)
+
+The wins follow a pattern. In **Latin America** (Ecuador, Brazil, Chile), people are much happier than their GDP says, and their photos are full of people and faces (Ecuador: faces in 24% of photos, against a typical 11%). In **southern and eastern Europe** (Greece, Hungary, Portugal), people are less happy than their GDP says, and faces turn up in only 4 to 6% of their photos.
+
+The misses are just as telling. **Iceland and New Zealand** are among the happiest countries in the data, but their photos are mostly empty landscapes, so the model marks them down. **Croatia and Latvia** go the other way: lots of people and faces in the photos, not much happiness. A camera sees the party, not the life around it.
+
+Per-country numbers: [`data/processed/showdown_countries.csv`](data/processed/showdown_countries.csv).
+
 ## Norway and Mexico
 
 ![Norway and Mexico](figures/norway-mexico.png)

@@ -1,0 +1,5 @@
+model,key,happiness,whr_2024,wvs_happy
+Photos only,photos_only,-0.036,-0.16,0.069
+People only,people_only,0.141,-0.019,0.088
+Money only,money_only,0.773,0.772,0.342
+Money + people,money_people,0.802,0.735,0.329
